@@ -15,7 +15,7 @@ app.get('/tweets/:usuario', (req,res) => {
 app.post('/tweets/:usuario', (req,res) => {
   res.send({ nome: req.params.usuario })
 })
-app.delete('/tweets/:usuario', (req,res) => {
+app.del('/tweets/:usuario', (req,res) => {
   res.send({ nome: req.params.usuario })
 })
 
@@ -29,7 +29,7 @@ app.get('/likes/:tweet', (req,res) => {
 app.post('/likes/:tweet', (req,res) => {
   res.send({ nome: req.params.tweet })
 })
-app.delete('/likes/:tweet', (req,res) => {
+app.del('/likes/:tweet', (req,res) => {
   res.send({ nome: req.params.tweet })
 })
 
@@ -43,10 +43,10 @@ app.get('/usuarios/:id', (req,res) => {
 app.post('/usuarios/:id', (req,res) => {
   res.send({ nome: req.params.id })
 })
-app.update('/usuarios/:id', (req,res) => {
+app.put('/usuarios/:id', (req,res) => {
   res.send({ nome: req.params.id })
 })
-app.delete('/usuarios/:id', (req,res) => {
+app.del('/usuarios/:id', (req,res) => {
   res.send({ nome: req.params.id })
 })
 
