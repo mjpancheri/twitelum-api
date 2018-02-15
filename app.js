@@ -5,19 +5,14 @@ const app = restify.createServer()
 
 require('dotenv').config()
 
-// routes/tweets.js
-app.get('/tweets', (req,res) => {
-  res.send({ nome: 'Mario' })
-})
-app.get('/tweets/:usuario', (req,res) => {
-  res.send({ nome: req.params.usuario })
-})
-app.post('/tweets/:usuario', (req,res) => {
-  res.send({ nome: req.params.usuario })
-})
-app.del('/tweets/:usuario', (req,res) => {
-  res.send({ nome: req.params.usuario })
-})
+// Auto-load Everything 
+consign()
+  .include('infra')
+  .then('models')
+  .then('controllers')
+  .then('routes')
+  .into(app);
+
 
 // routes/like.js
 app.get('/likes', (req,res) => {
@@ -49,5 +44,11 @@ app.put('/usuarios/:id', (req,res) => {
 app.del('/usuarios/:id', (req,res) => {
   res.send({ nome: req.params.id })
 })
+
+// routes/login.js
+app.post('/login', (req,res) => {
+  res.send({ nome: req.params.id })
+})
+
 
 module.exports = app
