@@ -7,7 +7,9 @@
         "dataCriacao": "2018-02-16T01:25:48.567Z",
         "likes": [
             {
-                "usuariosUsername": "artdiniz"
+                "usuario": {
+                    "login": "artdiniz"
+                }
             }
         ]
     },
@@ -27,10 +29,14 @@
         "dataCriacao": "2018-02-16T01:25:48.567Z",
         "likes": [
             {
-                "usuariosUsername": "vanessametonini"
+                "usuario": {
+                    "login": "vanessametonini"
+                }
             },
             {
-                "usuariosUsername": "omariosouto"
+                "usuario": {
+                    "login": "omariosouto"
+                }
             }
         ]
     },

@@ -2,7 +2,7 @@ class TweetsController {
     constructor(app) {
         this.app = app
         this.TweetsDAO = this.app.infra.dao.TweetsDAO
-        this.tweetsRepository = app.models.repositories.TweetsRepository
+        this.tweetsDTO = app.models.dtos.TweetsDTO
         
         // Class Methods
         this.listar = this.listar.bind(this)
@@ -29,20 +29,19 @@ class TweetsController {
     }
 
     adicionar(req,res, next) {
-        // Pega o header 
+        // Pega o header e verifica se tem um token
         const body = req.body
 
         this.TweetsDAO
-            .adicionar(this.tweetsRepository.toTweet(body))
-            .then((data) => {
-                // Status 201
+            .adicionar(this.tweetsDTO.toTweet(body))
+            .then((tweet) => {
                 // Header location: /tweets/id
+                req.header('location', `/tweets/${tweet._id}`);
                 res.status(201) 
-                res.json(data)
+                res.json(tweet)
             })
             .catch( (err) => res.json(err) )
     }
-
 
     deletar(req,res) {
         res.send({ nome: req.params.usuario })
