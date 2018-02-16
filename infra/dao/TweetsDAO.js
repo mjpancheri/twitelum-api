@@ -27,6 +27,20 @@ class TweetsDAO {
             })
         })
     }
+
+    buscaTodosDeUmUsuario(loginUsuario) {
+        return new Promise((resolve, reject) => {
+            const query = { "usuario.login": loginUsuario }
+            
+            this.dbTweets.find(query, (err, data) => {
+                if(err) {
+                    reject(err)
+                }
+                resolve(data)
+            })
+        })
+    }
+    
     adicionar(tweet) {
         console.log(tweet)
         return new Promise((resolve, reject) => {

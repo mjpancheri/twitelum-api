@@ -1,8 +1,10 @@
+const errors = require('restify-errors');
+
 class TweetsController {
     constructor(app) {
         this.app = app
         this.TweetsDAO = this.app.infra.dao.TweetsDAO
-        this.tweetsDTO = app.models.dtos.TweetsDTO
+        this.tweetsDTO = app.models.dto.TweetsDTO
         
         // Class Methods
         this.listar = this.listar.bind(this)
@@ -11,7 +13,7 @@ class TweetsController {
         this.deletar = this.deletar.bind(this)
     }
 
-    listar(req, res, next) {
+    listar(req, res) {
         this.TweetsDAO
             .buscaTodos()
             .then((data) => {
@@ -29,22 +31,29 @@ class TweetsController {
     }
 
     adicionar(req,res, next) {
-        // Pega o header e verifica se tem um token
+        // Pega o header e verifica se tem o token pra poder publicar
         const body = req.body
+        let jsonBody;
 
-        this.TweetsDAO
-            .adicionar(this.tweetsDTO.toTweet(body))
-            .then((tweet) => {
-                // Header location: /tweets/id
-                req.header('location', `/tweets/${tweet._id}`);
-                res.status(201) 
-                res.json(tweet)
-            })
-            .catch( (err) => res.json(err) )
+        try {
+            jsonBody = JSON.parse(req.body)
+
+            this.TweetsDAO
+                .adicionar(this.tweetsDTO.toTweet(jsonBody))
+                .then((tweet) => {
+                    // Header location: /tweets/id
+                    req.header('location', `/tweets/${tweet._id}`);
+                    res.status(201) 
+                    res.json(tweet)
+                })
+                .catch( (err) => res.json(err) )
+        } catch(e) {
+            res.send( new errors.InvalidContentError(e.message) )
+        }
     }
 
     deletar(req,res) {
-        res.send({ nome: req.params.usuario })
+        res.send({ status: `Não implementado: ${req.params.id}` })
     }
 }
 

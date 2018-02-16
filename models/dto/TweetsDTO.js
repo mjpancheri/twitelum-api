@@ -4,10 +4,9 @@ class TweetsDTO {
         this.toTweet = this.toTweet.bind(this)
     }
 
-    toTweet(body) {
-        const jsonBody = JSON.parse(body)
+    toTweet(jsonBody) {
         return {
-            user: {
+            usuario: {
                 login: jsonBody.login
             },
             conteudo: jsonBody.conteudo,

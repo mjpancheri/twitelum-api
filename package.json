@@ -15,7 +15,8 @@
     "consign": "^0.1.6",
     "dotenv": "^5.0.0",
     "nedb": "^1.8.0",
-    "restify": "^6.3.4"
+    "restify": "^6.3.4",
+    "restify-errors": "^5.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.14.12"
