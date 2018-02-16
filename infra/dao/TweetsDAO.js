@@ -15,6 +15,18 @@ class TweetsDAO {
             })
         })
     }
+
+    buscaUm(idTweet) {
+        console.log(idTweet)
+        return new Promise((resolve, reject) => {
+            this.dbTweets.findOne({ _id: idTweet }, (err, data) => {
+                if(err) {
+                    reject(err)
+                }
+                resolve(data)
+            })
+        })
+    }
 }
 
 module.exports = (app) => new TweetsDAO(app)

@@ -23,7 +23,13 @@ class TweetsController {
     // O controller pega esse dado convertido e manda pra view
 
     listarUm(req,res) {
-        res.send({ nome: req.params.usuario })
+        const idTweet = req.params.id
+        this.tweetsService
+            .pegaUm(idTweet)
+            // Aqui poderia ter o DTO (Repository) pra alterar o Objeto
+            .then((data) => {
+                res.json(data)
+            })
     }
 
     adicionar(req,res) {

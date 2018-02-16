@@ -12,7 +12,8 @@
     {
         "usersUsername": "artdiniz",
         "conteudo": "Daino instant quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
-        "dataCriacao": "2018-02-16T01:25:48.567Z"
+        "dataCriacao": "2018-02-16T01:25:48.567Z",
+        "likes": []
     },
     {
         "usersUsername": "marcobrunobr",
@@ -30,6 +31,7 @@
     {
         "usersUsername": "vanessametonini",
         "conteudo": "Dasque instant quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
-        "dataCriacao": "2018-02-16T01:25:48.567Z"
+        "dataCriacao": "2018-02-16T01:25:48.567Z",
+        "likes": []
     }
 ]

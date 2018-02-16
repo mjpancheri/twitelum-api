@@ -11,6 +11,12 @@ class TweetsService {
         return this.TweetsDAO
                    .buscaTodos()
     }
+    pegaUm(idTweet) {
+        console.log('listarUm', idTweet)
+
+        return this.TweetsDAO
+                   .buscaUm(idTweet)
+    }
 }
 
 module.exports = (app) => new TweetsService(app)
