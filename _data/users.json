@@ -1,0 +1,30 @@
+[
+    {
+        "username": "omariosouto",
+        "nome": "Mario",
+        "sobrenome": "Souto",
+        "email": "mario.souto@caelum.com.br",
+        "senha": "123456"
+    },
+    {
+        "username": "artdiniz",
+        "nome": "Artur",
+        "sobrenome": "Diniz",
+        "email": "artur.diniz@caelum.com.br",
+        "senha": "123456"
+    },
+    {
+        "username": "marcobrunobr",
+        "nome": "Marco",
+        "sobrenome": "Bruno",
+        "email": "marco.bruno@caelum.com.br",
+        "senha": "123456"
+    },
+    {
+        "username": "vanessametonini",
+        "nome": "Vanessa",
+        "sobrenome": "Tonini",
+        "email": "vanessa.tonini@caelum.com.br",
+        "senha": "123456"
+    }
+]

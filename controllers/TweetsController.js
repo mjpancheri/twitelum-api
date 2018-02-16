@@ -29,7 +29,7 @@ class TweetsController {
     adicionar(req,res) {
         const dbTweets = this.app.infra.config.db.tweets
 
-        dbTweets.insert({ conteudo: 'Alo alo w brazil', userID: 1 }, function (err, newDoc) {
+        dbTweets.insert({ conteudo: 'Alo alo w brazil', criadoEm: new Date() ,userID: 1 }, function (err, newDoc) {
             res.send(newDoc)
         }); 
     }

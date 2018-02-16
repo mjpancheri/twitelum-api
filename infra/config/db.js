@@ -1,12 +1,13 @@
 const Datastore = require('nedb')
+const loadInitialData = require('../../_data/loadInitialData')
+
+const dbConfig = { inMemoryOnly: true, autoload: true }
 
 db              = {};
-db.users     = new Datastore('_data/users.db');
-db.likes      = new Datastore('_data/likes.db');
-db.tweets      = new Datastore('_data/tweets.db');
+db.users     = new Datastore(dbConfig);
+db.tweets      = new Datastore(dbConfig);
 
-db.users.loadDatabase()
-db.likes.loadDatabase()
-db.tweets.loadDatabase()
+
+loadInitialData(db)
 
 module.exports = () => db
