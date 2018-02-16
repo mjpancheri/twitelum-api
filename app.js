@@ -3,6 +3,8 @@ const consign = require('consign')
 
 const app = restify.createServer()
 
+app.use(restify.plugins.bodyParser({ mapParams: false }));
+
 require('dotenv').config()
 
 // Auto-load Everything 

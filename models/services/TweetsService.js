@@ -1,22 +1,24 @@
-class TweetsService {
-    constructor(app) {
-        this.app = app
-        this.TweetsDAO = this.app.infra.dao.TweetsDAO
+// class TweetsService {
+//     constructor(app) {
+//         this.app = app
+//         this.TweetsDAO = this.app.infra.dao.TweetsDAO
 
-        // Bind class methods
-        this.pegaTodos = this.pegaTodos.bind(this)
-    }
+//         // Bind class methods
+//         this.pegaTodos = this.pegaTodos.bind(this)
+//     }
 
-    pegaTodos() {
-        return this.TweetsDAO
-                   .buscaTodos()
-    }
-    pegaUm(idTweet) {
-        console.log('listarUm', idTweet)
+//     pegaTodos() {
+//         return this.TweetsDAO
+//                    .buscaTodos()
+//     }
+//     pegaUm(idTweet) {
+//         return this.TweetsDAO
+//                    .buscaUm(idTweet)
+//     }
+//     adicionar(tweet) {
+//         return this.TweetsDAO
+//                    .adicionar(tweet)  
+//     }
+// }
 
-        return this.TweetsDAO
-                   .buscaUm(idTweet)
-    }
-}
-
-module.exports = (app) => new TweetsService(app)
+// module.exports = (app) => new TweetsService(app)

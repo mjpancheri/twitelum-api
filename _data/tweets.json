@@ -1,35 +1,43 @@
 [
     {
-        "usersUsername": "omariosouto",
+        "usuario":{
+            "login": "omariosouto"
+        },
         "conteudo": "Neque instant quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
         "dataCriacao": "2018-02-16T01:25:48.567Z",
         "likes": [
             {
-                "usersUsername": "artdiniz"
+                "usuariosUsername": "artdiniz"
             }
         ]
     },
     {
-        "usersUsername": "artdiniz",
+        "usuario":{
+            "login": "artdiniz"
+        },
         "conteudo": "Daino instant quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
         "dataCriacao": "2018-02-16T01:25:48.567Z",
         "likes": []
     },
     {
-        "usersUsername": "marcobrunobr",
+        "usuario":{
+            "login": "marcobrunobr"
+        },
         "conteudo": "Ipsum instant quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
         "dataCriacao": "2018-02-16T01:25:48.567Z",
         "likes": [
             {
-                "usersUsername": "vanessametonini"
+                "usuariosUsername": "vanessametonini"
             },
             {
-                "usersUsername": "omariosouto"
+                "usuariosUsername": "omariosouto"
             }
         ]
     },
     {
-        "usersUsername": "vanessametonini",
+        "usuario":{
+            "login": "vanessametonini"
+        },
         "conteudo": "Dasque instant quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
         "dataCriacao": "2018-02-16T01:25:48.567Z",
         "likes": []

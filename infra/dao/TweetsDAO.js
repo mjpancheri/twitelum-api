@@ -17,9 +17,20 @@ class TweetsDAO {
     }
 
     buscaUm(idTweet) {
-        console.log(idTweet)
         return new Promise((resolve, reject) => {
-            this.dbTweets.findOne({ _id: idTweet }, (err, data) => {
+            const query = { _id: idTweet }
+            this.dbTweets.findOne(query, (err, data) => {
+                if(err) {
+                    reject(err)
+                }
+                resolve(data)
+            })
+        })
+    }
+    adicionar(tweet) {
+        console.log(tweet)
+        return new Promise((resolve, reject) => {
+            this.dbTweets.insert(tweet, (err, data) => {
                 if(err) {
                     reject(err)
                 }

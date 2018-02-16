@@ -1,5 +1,5 @@
 function loadInitialData(db) {
-    db.users.insert(require('./users.json'))
+    db.usuarios.insert(require('./usuarios.json'))
     db.tweets.insert(require('./tweets.json'))
 }
 

@@ -1,7 +1,8 @@
 class TweetsController {
     constructor(app) {
         this.app = app
-        this.tweetsService = app.models.services.TweetsService
+        this.TweetsDAO = this.app.infra.dao.TweetsDAO
+        this.tweetsRepository = app.models.repositories.TweetsRepository
         
         // Class Methods
         this.listar = this.listar.bind(this)
@@ -11,34 +12,37 @@ class TweetsController {
     }
 
     listar(req, res, next) {
-        this.tweetsService
-            .pegaTodos()
+        this.TweetsDAO
+            .buscaTodos()
             .then((data) => {
                 res.json(data)
             })
     }
-    // # Fluxo louco-insano
-    // Service vai pegar os dados
-    // O DTO (Repository) pega os dados que o service retorna e converte pro nosso dominio
-    // O controller pega esse dado convertido e manda pra view
 
     listarUm(req,res) {
         const idTweet = req.params.id
-        this.tweetsService
-            .pegaUm(idTweet)
-            // Aqui poderia ter o DTO (Repository) pra alterar o Objeto
+        this.TweetsDAO
+            .buscaUm(idTweet)
             .then((data) => {
                 res.json(data)
             })
     }
 
-    adicionar(req,res) {
-        const dbTweets = this.app.infra.config.db.tweets
+    adicionar(req,res, next) {
+        // Pega o header 
+        const body = req.body
 
-        dbTweets.insert({ conteudo: 'Alo alo w brazil', criadoEm: new Date() ,userID: 1 }, function (err, newDoc) {
-            res.send(newDoc)
-        }); 
+        this.TweetsDAO
+            .adicionar(this.tweetsRepository.toTweet(body))
+            .then((data) => {
+                // Status 201
+                // Header location: /tweets/id
+                res.status(201) 
+                res.json(data)
+            })
+            .catch( (err) => res.json(err) )
     }
+
 
     deletar(req,res) {
         res.send({ nome: req.params.usuario })
