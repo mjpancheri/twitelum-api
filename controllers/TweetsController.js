@@ -12,14 +12,14 @@ class TweetsController {
 
     listar(req, res, next) {
         this.tweetsService
-            .buscaTodos()
+            .pegaTodos()
             .then((data) => {
                 res.json(data)
             })
     }
     // # Fluxo louco-insano
     // Service vai pegar os dados
-    // O DTO pega os dados que o service retorna e converte pro nosso dominio
+    // O DTO (Repository) pega os dados que o service retorna e converte pro nosso dominio
     // O controller pega esse dado convertido e manda pra view
 
     listarUm(req,res) {
@@ -27,7 +27,11 @@ class TweetsController {
     }
 
     adicionar(req,res) {
-        res.send({ nome: req.params.usuario })
+        const dbTweets = this.app.infra.config.db.tweets
+
+        dbTweets.insert({ conteudo: 'Alo alo w brazil', userID: 1 }, function (err, newDoc) {
+            res.send(newDoc)
+        }); 
     }
 
     deletar(req,res) {

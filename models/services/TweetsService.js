@@ -1,11 +1,16 @@
 class TweetsService {
     constructor(app) {
         this.app = app
-        this.UsuariosDAO = this.app.infra.dao.UsuariosDAO
+        this.TweetsDAO = this.app.infra.dao.TweetsDAO
+
+        // Bind class methods
+        this.pegaTodos = this.pegaTodos.bind(this)
     }
 
-    buscaTodos() {
-        return this.UsuariosDAO
+    pegaTodos() {
+        return this.TweetsDAO
                    .buscaTodos()
     }
 }
+
+module.exports = (app) => new TweetsService(app)
