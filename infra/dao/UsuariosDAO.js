@@ -1,8 +1,6 @@
 class UsuariosDAO {
     constructor(app) {
         this.dbUsuarios = app.infra.config.db.usuarios
-
-        this.buscaTodos = this.buscaTodos.bind(this)
     }
 
     buscaTodos() {

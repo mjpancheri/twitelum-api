@@ -5,6 +5,6 @@ module.exports = (app) => {
     app.get('/tweets/:id', tweetsController.listarUm)
     app.post('/tweets/', tweetsController.adicionar)
     app.del('/tweets/:id', tweetsController.deletar)
-    app.get('/tweets/:id/like', tweetsController.like)
+    app.post('/tweets/:id/like', tweetsController.like)
 
 }
