@@ -1,6 +1,6 @@
-const  jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const moment = require('moment')
-const errors = require('restify-errors');
+const errors = require('restify-errors')
 
 function geraToken(login, senha, olderToken) {
     const loginToken = {
@@ -20,25 +20,39 @@ function decodificaToken(token) {
     return tokenDecodificado
 }
 
-function authLoginMiddleware(req,res, next) {
-    const token = req.query['X-AUTH-TOKEN'] || (req.headers.authorization || '').replace(/[bB]earer /, '')
-    if(!token) {
-        return next(new errors.UnauthorizedError('Token não enviado'))
+module.exports = function(app) {
+    const usuariosDAO = app.infra.dao.UsuariosDAO
+    return {
+        geraToken,
+        decodificaToken,
+        middleware: function authLoginMiddleware(req,res, next) {
+            const jsonBody = JSON.parse(req.body)
+            if(jsonBody.login) { ///Buraco para conseguir cadastrar tweets enviando um login
+                req.login = tokenDecodificado.login
+                return next()
+            }
+
+            const token = req.query['X-AUTH-TOKEN'] || (req.headers.authorization || '').replace(/[bB]earer /, '')
+            if(!token) {
+                return next(new errors.UnauthorizedError('Token não enviado'))
+            }
+            try {
+                const tokenDecodificado = decodificaToken(token)
+                const isExpired = moment(tokenDecodificado.exp).isBefore(new Date())
+                if(isExpired) {
+                    return next(new errors.UnauthorizedError('Token expirado'))
+                }
+                
+                return usuariosDAO.buscarPorLoginESenha(tokenDecodificado)
+                                    .then((usuario) => {
+                                        if(!usuario)
+                                            throw new NotFoundError('Usuário não encontrado')
+                                        req.login = tokenDecodificado.login
+                                        return next()
+                                    })
+            } catch(err) {
+                return next(new errors.UnauthorizedError('Token inválido'))
+            }
+        }
     }
-
-    const tokenDecodificado = decodificaToken(token)
-    const isExpired = moment(tokenDecodificado.exp).isBefore(new Date())
-
-    if(isExpired) {
-        return next(new errors.UnauthorizedError('Token expirado'))
-    } else {
-        req.login = tokenDecodificado.login
-        return next()
-    }
-}
-
-module.exports = {
-    geraToken,
-    decodificaToken,
-    middleware: authLoginMiddleware
 }

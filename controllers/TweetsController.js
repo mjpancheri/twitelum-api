@@ -57,31 +57,24 @@ class TweetsController {
         res.send({ status: `Não implementado: ${req.params.id}` })
     }
 
-    like(req,res) {
-        console.log('like')
+    like(req,res, next) {
         const tweetInfo = {
             id: req.params.id,
             tweet: {
                 usuario: {
-                    login: "artdiniz"
+                    login: req.login
                 }
             }
         }
 
         this.tweetsDAO
             .toggleLike(tweetInfo)
-            .then((data) => {
+            .then((response) => {
                 res.status(201)
-                res.json({
-                    info: data,
-                    message: "Like adicionado com sucesso!"
-                })
+                res.json(response)
             })
             .catch((err) => {
-                res.status(404)
-                res.json({
-                    message: err.message
-                })
+                next(err)
             })
     }
 }

@@ -14,8 +14,9 @@ consign()
   .include('infra')
   .then('models')
   .then('controllers')
+  .then('middlewares')
   .then('routes')
   .into(app)
-
+  
 
 module.exports = app

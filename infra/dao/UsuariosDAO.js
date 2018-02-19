@@ -25,6 +25,18 @@ class UsuariosDAO {
             })
         })
     }
+
+    buscarPorLoginESenha(loginInfo) {
+        return new Promise((resolve, reject) => {
+            const query = { login: loginInfo.login, senha: loginInfo.senha }
+            this.dbUsuarios.findOne(query, (err, data) => {
+                if(err) {
+                    reject(err)
+                }
+                resolve(data)
+            })
+        })
+    }
     
     adicionar(usuario) {
         console.log(usuario)

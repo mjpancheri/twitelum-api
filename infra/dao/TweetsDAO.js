@@ -1,3 +1,5 @@
+const errors = require('restify-errors');
+
 class TweetsDAO {
     constructor(app) {
         this.dbTweets = app.infra.config.db.tweets
@@ -75,6 +77,10 @@ class TweetsDAO {
     toggleLike(tweetInfo) { // Colocar uma camada antes
         return this.buscaUm(tweetInfo.id)
                     .then((tweet) => {
+                        console.log('tweet que veio', !tweet)
+                        if(!tweet) {
+                            throw new errors.NotFoundError('Tweet não encontrado')
+                        }
                         const liker = tweetInfo.tweet.usuario.login
                         const isLiked = tweet.likes.find((like) => like.usuario.login === liker )
                         console.log(tweet.likes)
@@ -93,12 +99,11 @@ class TweetsDAO {
         return new Promise((resolve, reject) => {
             this.dbTweets.update({ "_id": tweetInfo.id }, { $push: { likes: tweetInfo.tweet } }, {}, (err, data) => {
                 if(data === 0) {
-                    const error = new Error('Tweet não encontrado')
-                    error.status = 404
-                    reject(error)
+                    reject(new errors.NotFoundError('Não foi possível inserir o like'))
                 }
-                console.log('Deu certo!', data)
-                resolve(data)
+                resolve({
+                    message: 'Like inserido com sucesso!'
+                })
             })            
         })
     }
@@ -106,12 +111,11 @@ class TweetsDAO {
         return new Promise((resolve, reject) => {
             this.dbTweets.update({ "_id": tweetInfo.id }, { $set: { likes: updatedLikes } }, {}, (err, data) => {
                 if(data === 0) {
-                    const error = new Error('Tweet não encontrado')
-                    error.status = 404
-                    reject(error)
+                    reject(new errors.NotFoundError('Não foi possível inserir o like'))
                 }
-                console.log('Deu certo!', data)
-                resolve(data)
+                resolve({
+                    message: 'Like removido com sucesso!'
+                })
             })            
         })            
     }

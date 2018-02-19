@@ -1,3 +1,5 @@
+// const authLogin = require('../middlewares/authLogin')
+
 module.exports = (app) => {
 
     app.post('/login', (req, res) => {
