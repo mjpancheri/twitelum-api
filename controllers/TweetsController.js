@@ -35,10 +35,14 @@ class TweetsController {
         // Pega o header e verifica se tem o token pra poder publicar
         const body = req.body
         const jsonBody = typeof req.body === 'object' ? req.body : JSON.parse(body)
-        
+        console.log(req.login)
+        const tweetObj = {
+            login: req.login,
+            conteudo: jsonBody.conteudo
+        }
         try {
             this.tweetsDAO
-                .adicionar(this.tweetsDTO.toTweet(jsonBody))
+                .adicionar(this.tweetsDTO.toTweet(tweetObj))
                 .then((tweet) => {
                     // Header location: /tweets/id
                     req.header('location', `/tweets/${tweet._id}`);
