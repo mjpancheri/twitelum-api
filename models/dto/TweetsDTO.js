@@ -1,3 +1,5 @@
+const errors = require('restify-errors')
+
 class TweetsDTO {
     constructor(app) {
         this.app = app
@@ -5,6 +7,13 @@ class TweetsDTO {
     }
 
     toTweet(jsonBody) {
+        if(!jsonBody.login) {
+            throw new errors.InvalidContentError('Login não informado')
+        }
+        if(!jsonBody.conteudo) {
+            throw new errors.InvalidContentError('Conteúdo não informado')
+        }
+
         return {
             usuario: {
                 login: jsonBody.login

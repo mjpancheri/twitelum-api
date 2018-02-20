@@ -26,9 +26,9 @@ module.exports = function(app) {
         geraToken,
         decodificaToken,
         middleware: function authLoginMiddleware(req,res, next) {
-            const jsonBody = JSON.parse(req.body)
-            if(jsonBody.login) { ///Buraco para conseguir cadastrar tweets enviando um login
-                req.login = tokenDecodificado.login
+            
+            if(!req.query['X-AUTH-TOKEN'] && req.body) { ///Buraco para conseguir cadastrar tweets enviando um login
+                req.login = req.body.login
                 return next()
             }
 

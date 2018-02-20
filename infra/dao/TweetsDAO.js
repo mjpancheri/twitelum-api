@@ -9,7 +9,7 @@ class TweetsDAO {
         return new Promise((resolve, reject) => {
             this.dbTweets.find({}, (err, data) => {
                 if(err) {
-                    reject(err)
+                    reject(new errors.InternalServerError(err))
                 }
                 resolve(data)
             })
@@ -21,7 +21,7 @@ class TweetsDAO {
             const query = { _id: idTweet }
             this.dbTweets.findOne(query, (err, data) => {
                 if(err) {
-                    reject(err)
+                    reject(new errors.InternalServerError(err))
                 }
                 resolve(data)
             })
@@ -34,7 +34,22 @@ class TweetsDAO {
             
             this.dbTweets.find(query, (err, data) => {
                 if(err) {
-                    reject(err)
+                    reject(new errors.InternalServerError(err))
+                }
+                resolve(data)
+            })
+        })
+    }
+
+    remover(tweetId) {
+        return new Promise((resolve,reject) => {
+            const query = { _id: tweetId }
+            this.dbTweets.remove(query, {}, (err,data) => {
+                if(err) {
+                    reject(new errors.InternalServerError(err))
+                }
+                if(data === 0) {
+                    reject(new errors.NotFoundError(`Tweet com id: ${tweetId} não foi encontrado e não pode ser removido`))
                 }
                 resolve(data)
             })
@@ -45,7 +60,7 @@ class TweetsDAO {
         return new Promise((resolve, reject) => {
             this.dbTweets.insert(tweet, (err, data) => {
                 if(err) {
-                    reject(err)
+                    reject(new errors.InternalServerError(err))
                 }
                 resolve(data)
             })
@@ -56,7 +71,7 @@ class TweetsDAO {
         return new Promise((resolve, reject) => {
             this.dbTweets.find({"conteudo": /#/} , function(err, data) {
                 if(err) {
-                    reject(err)
+                    reject(new errors.InternalServerError(err))
                 }
                 resolve(data)
             })
@@ -67,7 +82,7 @@ class TweetsDAO {
         return new Promise((resolve, reject) => {
             this.dbTweets.find({"conteudo": new RegExp(`#${nomeHashtag}[ -]{1}`)} , function(err, data) {
                 if(err) {
-                    reject(err)
+                    reject(new errors.InternalServerError(err))
                 }
                 resolve(data)
             })
@@ -77,19 +92,15 @@ class TweetsDAO {
     toggleLike(tweetInfo) { // Colocar uma camada antes
         return this.buscaUm(tweetInfo.id)
                     .then((tweet) => {
-                        console.log('tweet que veio', !tweet)
                         if(!tweet) {
                             throw new errors.NotFoundError('Tweet não encontrado')
                         }
                         const liker = tweetInfo.tweet.usuario.login
                         const isLiked = tweet.likes.find((like) => like.usuario.login === liker )
-                        console.log(tweet.likes)
                         if(isLiked) {
-                            console.log('Remove like')
                             const updatedLikes = tweet.likes.filter((like) => like.usuario.login !== liker )
                             return this.removeLike(tweetInfo, updatedLikes)
                         } else {
-                            console.log('Insere like')
                             return this.insereLike(tweetInfo)
                         }
                     })
@@ -111,7 +122,7 @@ class TweetsDAO {
         return new Promise((resolve, reject) => {
             this.dbTweets.update({ "_id": tweetInfo.id }, { $set: { likes: updatedLikes } }, {}, (err, data) => {
                 if(data === 0) {
-                    reject(new errors.NotFoundError('Não foi possível inserir o like'))
+                    reject(new errors.NotFoundError('Não foi possível remover o like'))
                 }
                 resolve({
                     message: 'Like removido com sucesso!'

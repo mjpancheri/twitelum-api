@@ -34,11 +34,9 @@ class TweetsController {
     adicionar(req,res, next) {
         // Pega o header e verifica se tem o token pra poder publicar
         const body = req.body
-        let jsonBody;
-
+        const jsonBody = typeof req.body === 'object' ? req.body : JSON.parse(body)
+        
         try {
-            jsonBody = JSON.parse(req.body)
-
             this.tweetsDAO
                 .adicionar(this.tweetsDTO.toTweet(jsonBody))
                 .then((tweet) => {
@@ -49,12 +47,24 @@ class TweetsController {
                 })
                 .catch( (err) => res.json(err) )
         } catch(e) {
-            res.send( new errors.InvalidContentError(e.message) )
+            next( new errors.InvalidContentError(e.message) )
         }
     }
 
-    deletar(req,res) {
-        res.send({ status: `Não implementado: ${req.params.id}` })
+    deletar(req,res, next) {
+        const tweetId = req.params.id
+        this.tweetsDAO
+            .remover(tweetId)
+            .then((itensRemovidos) => {
+                res.status(201) 
+                res.json({
+                    removidos: itensRemovidos,
+                    message: `Tweet com id: ${tweetId} foi removido com sucesso`
+                })
+            })
+            .catch((err) => {
+                next(err)
+            })
     }
 
     like(req,res, next) {
