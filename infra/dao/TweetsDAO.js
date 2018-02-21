@@ -1,13 +1,15 @@
 const errors = require('restify-errors');
+const UsuariosDAO = require('./UsuariosDAO')
 
 class TweetsDAO {
     constructor(app) {
         this.dbTweets = app.infra.config.db.tweets
+        this.usuariosDAO = UsuariosDAO(app)
     }
 
     buscaTodos() {
         return new Promise((resolve, reject) => {
-            this.dbTweets.find({}, (err, data) => {
+            this.dbTweets.find({}).sort({createdAt: -1}).exec((err, data) => {
                 if(err) {
                     reject(new errors.InternalServerError(err))
                 }
@@ -57,19 +59,37 @@ class TweetsDAO {
     }
     
     adicionar(tweet) {
-        return new Promise((resolve, reject) => {
-            this.dbTweets.insert(tweet, (err, data) => {
-                if(err) {
-                    reject(new errors.InternalServerError(err))
-                }
-                resolve(data)
-            })
-        })
+        return this.usuariosDAO 
+                    .buscaUm(tweet.usuario.login)
+                    .then( usuario => {
+                        if(!usuario)
+                            throw new errors.NotFoundError('Usuário não encontrado')
+                        
+                        delete usuario.senha
+                        delete usuario.createdAt
+                        delete usuario.updatedAt
+                        delete usuario._id
+
+                        tweet.usuario = {
+                            ...usuario
+                        }
+                        return tweet
+                    })
+                    .then((tweetModificado) => {
+                        return new Promise((resolve, reject) => {
+                            this.dbTweets.insert(tweetModificado, (err, data) => {
+                                if(err) {
+                                    reject(new errors.InternalServerError(err))
+                                }
+                                resolve(data)
+                            })
+                        })
+                    })
     }
     
     buscaTodasHashtags() {
         return new Promise((resolve, reject) => {
-            this.dbTweets.find({"conteudo": /#/} , function(err, data) {
+            this.dbTweets.find({"conteudo": /#/}).sort({createdAt: -1}).exec((err, data) => {
                 if(err) {
                     reject(new errors.InternalServerError(err))
                 }
@@ -80,7 +100,7 @@ class TweetsDAO {
 
     buscaUmaHashtag(nomeHashtag) {
         return new Promise((resolve, reject) => {
-            this.dbTweets.find({"conteudo": new RegExp(`#${nomeHashtag}[ -]{1}`)} , function(err, data) {
+            this.dbTweets.find({"conteudo": new RegExp(`#${nomeHashtag}[ -]{1}`)}).sort({createdAt: -1}).exec((err, data) => {
                 if(err) {
                     reject(new errors.InternalServerError(err))
                 }
