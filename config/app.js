@@ -14,11 +14,19 @@ const app = restify.createServer()
 
 require('dotenv').config()
 
-var cors = require('cors');
 
-app.use(cors());
-// app.pre(cors.preflight)
-// app.use(cors.actual)
+const corsMiddleware = require('restify-cors-middleware')
+
+const cors = corsMiddleware({
+  preflightMaxAge: 5, //Optional
+  origins: ['*'],
+  allowHeaders: ['X-AUTH-TOKEN', 'Access-Control-Allow-Origin'],
+  exposeHeaders: ['X-AUTH-TOKEN', 'Access-Control-Allow-Origin']
+})
+
+app.pre(cors.preflight)
+app.use(cors.actual)
+
 
 app.use(restify.plugins.bodyParser({ mapParams: false }));
 app.use(restify.plugins.queryParser());

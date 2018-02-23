@@ -20,7 +20,7 @@ module.exports = (app) => {
                             return next( new errors.NotFoundError('Usuario não encontrado') )
                         }
                         const token = authLogin.geraToken(login, senha)
-                        res.json({ token })    
+                        return res.json({ token: token })    
                     })
             } 
 
