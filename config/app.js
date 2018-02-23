@@ -5,7 +5,7 @@ const app = restify.createServer()
 
 require('dotenv').config()
 
-console.log(process.env)
+process.env.JWTSECRET = "Birdman"
 
 const corsMiddleware = require('restify-cors-middleware')
 
