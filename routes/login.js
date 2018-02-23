@@ -8,6 +8,7 @@ module.exports = (app) => {
             const login = jsonBody.login
             const senha = jsonBody.senha
 
+            res.status(200)
             res.json({ login, senha })
 
             // if(jsonBody.login && jsonBody.senha) {
