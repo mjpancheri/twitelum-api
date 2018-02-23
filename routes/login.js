@@ -9,7 +9,7 @@ module.exports = (app) => {
             const senha = jsonBody.senha
 
             if(jsonBody.login && jsonBody.senha) {
-                usuarioDAO
+                return usuarioDAO
                     .buscarPorLoginESenha({
                         login,
                         senha
