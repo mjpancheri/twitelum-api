@@ -1,24 +1,15 @@
 const restify = require('restify')
 const consign = require('consign')
 const errors = require('restify-errors')
-// const corsMiddleware = require('restify-cors-middleware')
- 
-// const cors = corsMiddleware({
-//   preflightMaxAge: 5, //Optional
-//   origins: ['*'],
-//   allowHeaders: ['X-AUTH-TOKEN', 'Access-Control-Allow-Origin'],
-//   exposeHeaders: ['X-AUTH-TOKEN', 'Access-Control-Allow-Origin']
-// })
- 
 const app = restify.createServer()
 
 require('dotenv').config()
 
+console.log(process.env)
 
 const corsMiddleware = require('restify-cors-middleware')
 
 const cors = corsMiddleware({
-  preflightMaxAge: 5, //Optional
   origins: ['*'],
   allowHeaders: ['X-AUTH-TOKEN', 'Access-Control-Allow-Origin'],
   exposeHeaders: ['X-AUTH-TOKEN', 'Access-Control-Allow-Origin']
