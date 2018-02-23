@@ -1,4 +1,5 @@
 const app = require('./config/app')
+const http = require('http')
 
 const port = process.env.PORT;
 
@@ -7,3 +8,8 @@ app.listen(port, function() {
     para derrubá-lo aperte Ctrl + C
     para visualizar acesse: http://localhost:${port}`)
 })
+
+
+setInterval(() => {
+    http.get('http://twitelum-api.herokuapp.com/')
+}, 240000)
