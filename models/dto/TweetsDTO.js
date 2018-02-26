@@ -20,7 +20,7 @@ class TweetsDTO {
             },
             conteudo: jsonBody.conteudo,
             dataCriacao: jsonBody.data || new Date(),
-            likes: []
+            likes: [],
         }
     }
 }

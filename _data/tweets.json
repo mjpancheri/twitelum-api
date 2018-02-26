@@ -14,7 +14,8 @@
                     "login": "artdiniz"
                 }
             }
-        ]
+        ],
+        "totalLikes": 1
     },
     {
         "usuario":{
@@ -25,7 +26,8 @@
             "email": "artur.diniz@caelum.com.br"
         },
         "conteudo": "Daino instant quisquam est qui #dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
-        "likes": []
+        "likes": [],
+        "totalLikes": 0
     },
     {
         "usuario":{
@@ -47,7 +49,8 @@
                     "login": "omariosouto"
                 }
             }
-        ]
+        ],
+        "totalLikes": 2
     },
     {
         "usuario":{
@@ -58,7 +61,8 @@
             "email": "vanessa.tonini@caelum.com.br"
         },
         "conteudo": "#Dasque instant quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
-        "likes": []
+        "likes": [],
+        "totalLikes": 0
     }
 ]
 

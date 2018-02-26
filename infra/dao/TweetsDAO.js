@@ -128,7 +128,7 @@ class TweetsDAO {
                 
     insereLike(tweetInfo) {
         return new Promise((resolve, reject) => {
-            this.dbTweets.update({ "_id": tweetInfo.id }, { $push: { likes: tweetInfo.tweet } }, {}, (err, data) => {
+            this.dbTweets.update({ "_id": tweetInfo.id }, { $push: { likes: tweetInfo.tweet }, $inc: { totalLikes: 1 } }, {}, (err, data) => {
                 if(data === 0) {
                     reject(new errors.NotFoundError('Não foi possível inserir o like'))
                 }
@@ -140,7 +140,7 @@ class TweetsDAO {
     }
     removeLike(tweetInfo, updatedLikes) {
         return new Promise((resolve, reject) => {
-            this.dbTweets.update({ "_id": tweetInfo.id }, { $set: { likes: updatedLikes } }, {}, (err, data) => {
+            this.dbTweets.update({ "_id": tweetInfo.id }, { $set: { likes: updatedLikes, totalLikes: updatedLikes.length } }, {}, (err, data) => {
                 if(data === 0) {
                     reject(new errors.NotFoundError('Não foi possível remover o like'))
                 }
