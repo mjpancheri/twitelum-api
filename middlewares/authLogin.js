@@ -28,9 +28,9 @@ module.exports = function(app) {
         middleware: function authLoginMiddleware(req,res, next) {
             const AUTHTOKEN = req.query['X-AUTH-TOKEN'] || req.query['x-auth-token']
             
-            if(req.body === undefined) {
-                return next(new errors.UnauthorizedError('Nenhum dado foi enviado'))
-            }
+            // if(req.body === undefined) {
+            //     return next(new errors.UnauthorizedError('Nenhum dado foi enviado'))
+            // }
             req.body = typeof req.body === 'object' ? req.body : JSON.parse(req.body)
 
             if(AUTHTOKEN || req.body.login) {
