@@ -15,10 +15,28 @@ class TweetsController {
     }
 
     listar(req, res) {
+        console.log(req.login)
         this.tweetsDAO
             .buscaTodos()
-            .then((data) => {
-                res.json(data)
+            .then(tweets => {
+                if(req.login) {
+                    return tweets.map((tweet) => {
+                        const likeado = tweet.likes.find((like) => {
+                            return like.usuario.login === req.login
+                        })
+
+                        return {
+                            ...tweet,
+                            likeado: !!likeado
+                        }
+                    })
+                } else {
+                    return tweets
+                }
+
+            })
+            .then((tweets) => {
+                res.json(tweets)
             })
     }
 
@@ -85,7 +103,10 @@ class TweetsController {
             .toggleLike(tweetInfo)
             .then((response) => {
                 res.status(201)
-                res.json(response)
+                res.json({
+                    liker: req.login,
+                    ...response
+                })
             })
             .catch((err) => {
                 next(err)

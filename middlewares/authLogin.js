@@ -27,11 +27,25 @@ module.exports = function(app) {
         decodificaToken,
         middleware: function authLoginMiddleware(req,res, next) {
             const AUTHTOKEN = req.query['X-AUTH-TOKEN'] || req.query['x-auth-token']
-            
+                        
             // if(req.body === undefined) {
             //     return next(new errors.UnauthorizedError('Nenhum dado foi enviado'))
             // }
-            req.body = typeof req.body === 'object' ? req.body : JSON.parse(req.body)
+
+            console.log('AUTHTOKEN', req.query)
+
+            if(req.body) {
+                req.body = typeof req.body === 'object' ? req.body : JSON.parse(req.body)
+            } else {
+                req.body = {}
+            }
+
+
+            // Se for a rota de /tweets
+            if(req.url === '/tweets') {
+                req.login = ''
+                return next()
+            }
 
             if(AUTHTOKEN || req.body.login) {
                 // Se tiver o body.login vai por outro
@@ -41,6 +55,8 @@ module.exports = function(app) {
                 }
                 // Se tiver o x-auth-token vai por um caminho
                 if(AUTHTOKEN) {
+                    
+
                     try {
                         const tokenDecodificado = decodificaToken(AUTHTOKEN)
                         const isExpired = moment(tokenDecodificado.exp).isBefore(new Date())

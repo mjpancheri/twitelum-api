@@ -133,7 +133,8 @@ class TweetsDAO {
                     reject(new errors.NotFoundError('Não foi possível inserir o like'))
                 }
                 resolve({
-                    message: 'Like inserido com sucesso!'
+                    message: 'Like inserido com sucesso!',
+                    status: 201
                 })
             })            
         })
@@ -145,7 +146,8 @@ class TweetsDAO {
                     reject(new errors.NotFoundError('Não foi possível remover o like'))
                 }
                 resolve({
-                    message: 'Like removido com sucesso!'
+                    message: 'Like removido com sucesso!',
+                    status: 'removido'
                 })
             })            
         })            
