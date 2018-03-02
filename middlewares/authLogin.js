@@ -26,6 +26,7 @@ module.exports = function(app) {
         geraToken,
         decodificaToken,
         middleware: function authLoginMiddleware(req,res, next) {
+            console.log(req.body)
             const AUTHTOKEN = req.query['X-AUTH-TOKEN'] || req.query['x-auth-token']
                         
             // if(req.body === undefined) {
@@ -42,7 +43,8 @@ module.exports = function(app) {
 
 
             // Se for a rota de /tweets
-            if(req.url === '/tweets') {
+            if(req.url === '/tweets' && req.method === 'GET') {
+                console.log('Bateu em tweets')
                 req.login = ''
                 return next()
             }
