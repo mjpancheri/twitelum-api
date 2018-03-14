@@ -56,8 +56,7 @@ class TweetsController {
         console.log(req.login)
         const tweetObj = {
             login: req.login,
-            conteudo: jsonBody.conteudo,
-            likeado: false
+            conteudo: jsonBody.conteudo
         }
         try {
             this.tweetsDAO
