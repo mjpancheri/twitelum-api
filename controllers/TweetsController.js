@@ -56,7 +56,8 @@ class TweetsController {
         console.log(req.login)
         const tweetObj = {
             login: req.login,
-            conteudo: jsonBody.conteudo
+            conteudo: jsonBody.conteudo,
+            likeado: false
         }
         try {
             this.tweetsDAO
@@ -65,10 +66,7 @@ class TweetsController {
                     // Header location: /tweets/id
                     req.header('location', `/tweets/${tweet._id}`);
                     res.status(201) 
-                    res.json({
-                        ...tweet,
-                        likeado: !!likeado
-                    })
+                    res.json(tweet)
                 })
                 .catch( (err) => res.json(err) )
         } catch(e) {
