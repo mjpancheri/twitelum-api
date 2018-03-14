@@ -65,7 +65,10 @@ class TweetsController {
                     // Header location: /tweets/id
                     req.header('location', `/tweets/${tweet._id}`);
                     res.status(201) 
-                    res.json(tweet)
+                    res.json({
+                        ...tweet,
+                        likeado: !!likeado
+                    })
                 })
                 .catch( (err) => res.json(err) )
         } catch(e) {
