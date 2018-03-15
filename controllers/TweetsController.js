@@ -21,6 +21,9 @@ class TweetsController {
             .then(tweets => {
                 if(req.login) {
                     return tweets.map((tweet) => {
+                        if(tweet.usuario.login === req.login) {
+                            tweet.removivel = true
+                        }
                         const likeado = tweet.likes.find((like) => {
                             return like.usuario.login === req.login
                         })
