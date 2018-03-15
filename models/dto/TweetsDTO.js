@@ -21,7 +21,6 @@ class TweetsDTO {
             conteudo: jsonBody.conteudo,
             dataCriacao: jsonBody.data || new Date(),
             likes: [],
-            likeado: false,
             totalLikes: 0
         }
     }
