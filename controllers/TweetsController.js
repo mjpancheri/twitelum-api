@@ -21,6 +21,8 @@ class TweetsController {
             .then(tweets => {
                 if(req.login) {
                     return tweets.map((tweet) => {
+                        console.log(tweet.usuario.login, req.login)
+                        console.log(tweet.usuario.login === req.login)
                         if(tweet.usuario.login === req.login) {
                             tweet.removivel = true
                         }
@@ -65,6 +67,9 @@ class TweetsController {
             this.tweetsDAO
                 .adicionar(this.tweetsDTO.toTweet(tweetObj))
                 .then((tweet) => {
+                    if(tweet.usuario.login === req.login) {
+                        tweet.removivel = true
+                    }
                     // Header location: /tweets/id
                     req.header('location', `/tweets/${tweet._id}`);
                     res.status(201) 
