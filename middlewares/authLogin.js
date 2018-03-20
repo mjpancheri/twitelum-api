@@ -26,14 +26,14 @@ module.exports = function(app) {
         geraToken,
         decodificaToken,
         middleware: function authLoginMiddleware(req,res, next) {
-            console.log(req.body)
+            // console.log(req.body)
             const AUTHTOKEN = req.query['X-AUTH-TOKEN'] || req.query['x-auth-token']
                         
             // if(req.body === undefined) {
             //     return next(new errors.UnauthorizedError('Nenhum dado foi enviado'))
             // }
 
-            console.log('AUTHTOKEN', req.query)
+            // console.log('AUTHTOKEN', req.query)
 
             if(req.body) {
                 req.body = typeof req.body === 'object' ? req.body : JSON.parse(req.body)

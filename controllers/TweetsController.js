@@ -84,7 +84,7 @@ class TweetsController {
     deletar(req,res, next) {
         const tweetId = req.params.id
         this.tweetsDAO
-            .remover(tweetId)
+            .remover(tweetId, req.login)
             .then((itensRemovidos) => {
                 res.status(201) 
                 res.json({
