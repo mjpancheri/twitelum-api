@@ -1,22 +1,23 @@
 const jwt = require('jsonwebtoken')
 const moment = require('moment')
 const errors = require('restify-errors')
+const secret = process.env.JWTSECRET || 'qwertyuiopasdfghjklzxcvbnm'
 
 function geraToken(login, senha, olderToken) {
     const loginToken = {
         login,
-        senha
+        //senha
     }
     const token = jwt.sign(
         loginToken,
-        process.env.JWTSECRET,
+        secret,
         { expiresIn: moment().add(14, 'days').valueOf() }
     );
     return token
 }
 
 function decodificaToken(token) {
-    var tokenDecodificado = jwt.verify(token, process.env.JWTSECRET);
+    var tokenDecodificado = jwt.verify(token, secret);
     return tokenDecodificado
 }
 
@@ -25,7 +26,7 @@ module.exports = function(app) {
     return {
         geraToken,
         decodificaToken,
-        middleware: function authLoginMiddleware(req,res, next) {
+        middleware: function authLoginMiddleware(req, res, next) {
             // console.log(req.body)
             const AUTHTOKEN = req.query['X-AUTH-TOKEN'] || req.query['x-auth-token']
                         
@@ -44,7 +45,7 @@ module.exports = function(app) {
 
             // Se for a rota de /tweets
             if(req.url === '/tweets' && req.method === 'GET') {
-                console.log('Bateu em tweets')
+                //console.log('Bateu em tweets')
                 req.login = ''
                 return next()
             }
@@ -57,16 +58,14 @@ module.exports = function(app) {
                 }
                 // Se tiver o x-auth-token vai por um caminho
                 if(AUTHTOKEN) {
-                    
-
                     try {
                         const tokenDecodificado = decodificaToken(AUTHTOKEN)
                         const isExpired = moment(tokenDecodificado.exp).isBefore(new Date())
                         if(isExpired) {
                             return next(new errors.UnauthorizedError('Token expirado'))
                         }
-                        
-                        return usuariosDAO.buscarPorLoginESenha(tokenDecodificado)
+                        //console.log(tokenDecodificado);
+                        return usuariosDAO.buscaUm(tokenDecodificado.login)
                                             .then((usuario) => {
                                                 if(!usuario)
                                                     throw new errors.NotFoundError('Usuário não encontrado')

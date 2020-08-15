@@ -27,6 +27,7 @@ class UsuariosDAO {
     }
 
     buscarPorLoginESenha(loginInfo) {
+        console.log(loginInfo);
         return new Promise((resolve, reject) => {
             const query = { login: loginInfo.login, senha: loginInfo.senha }
             this.dbUsuarios.findOne(query, (err, data) => {

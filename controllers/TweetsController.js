@@ -15,14 +15,14 @@ class TweetsController {
     }
 
     listar(req, res) {
-        console.log(req.login)
+        //console.log(req.login)
         this.tweetsDAO
             .buscaTodos()
             .then(tweets => {
                 if(req.login) {
                     return tweets.map((tweet) => {
-                        console.log(tweet.usuario.login, req.login)
-                        console.log(tweet.usuario.login === req.login)
+                        //console.log(tweet.usuario.login, req.login)
+                        //console.log(tweet.usuario.login === req.login)
                         if(tweet.usuario.login === req.login) {
                             tweet.removivel = true
                         }
@@ -58,7 +58,7 @@ class TweetsController {
         // Pega o header e verifica se tem o token pra poder publicar
         const body = req.body
         const jsonBody = typeof req.body === 'object' ? req.body : JSON.parse(body)
-        console.log(req.login)
+        //console.log(req.login)
         const tweetObj = {
             login: req.login,
             conteudo: jsonBody.conteudo
